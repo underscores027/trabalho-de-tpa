@@ -7,6 +7,9 @@ package lib;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.Queue;
+
 
 /**
  *
@@ -26,7 +29,6 @@ public class ArvoreBinariaExemplo<T> implements IArvoreBinaria<T> {
     }
 
     public void adicionar(T novoValor) {
-        System.out.println(novoValor);
         raiz = adicionarRecursivamente(raiz, novoValor);
     }
 
@@ -74,12 +76,57 @@ public class ArvoreBinariaExemplo<T> implements IArvoreBinaria<T> {
 
     @Override
     public String caminharEmNivel() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.    
+        if (raiz == null) {
+            return "[]"; //caso de arvore vazia
+        }
+
+        StringBuilder result = new StringBuilder("[");
+        Queue<No<T>> fila = new LinkedList<>();
+        fila.offer(raiz); // Adiciona o nó raiz à fila.
+
+        while (!fila.isEmpty()) {
+            No<T> noAtual = fila.poll(); // Remove o nó da fila.
+            result.append(noAtual.getValor().toString()).append(", \n"); // Adiciona o valor do nó à saída.
+
+            if (noAtual.getFilhoEsquerda() != null) {
+                fila.offer(noAtual.getFilhoEsquerda()); // Adiciona o filho esquerdo à fila.
+            }
+
+            if (noAtual.getFilhoDireita() != null) {
+                fila.offer(noAtual.getFilhoDireita()); // Adiciona o filho direito à fila.
+            }
+        }
+
+        // finalzinho da fila
+        result.setLength(result.length() - 2);
+        result.append("]");
+
+        return result.toString();
     }
     
     @Override
     public String caminharEmOrdem() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.    
+        if (raiz == null) {
+            return "[]"; // Retorna uma string vazia se a árvore estiver vazia.
+        }
+
+        StringBuilder resultado = new StringBuilder("[");
+        caminharEmOrdemRecursivo(raiz, resultado);
+        resultado.setLength(resultado.length() - 2); // finalzinho da fila
+        resultado.append("]"); //isso não é uma lista, stringbuilder usa .append
+
+        return resultado.toString();
+    }
+
+    private void caminharEmOrdemRecursivo(No<T> no, StringBuilder resultado) {
+        if (no == null) {
+            return;
+        }
+        caminharEmOrdemRecursivo(no.getFilhoEsquerda(), resultado);
+
+        resultado.append(no.getValor().toString()).append(", \n");
+
+        caminharEmOrdemRecursivo(no.getFilhoDireita(), resultado);
     }
     
     

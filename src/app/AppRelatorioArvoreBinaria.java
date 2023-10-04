@@ -31,6 +31,13 @@ public class AppRelatorioArvoreBinaria {
         //Chamo o gerador para inserir 100 elementos nessa árvore de forma que fique degenerada
         gerador.geraArvoreDegenerada(100, arv); //essa parada usa o método adicionar (comentário victor)
         System.out.println("Árvore Degenerada Criada");
+
+        String resultado = arv.caminharEmNivel();
+        System.out.println("caminhar em nivel:");
+        System.out.println(resultado);
+        System.out.println("caminhar em ordem:");
+        resultado = arv.caminharEmOrdem();
+        System.out.println(resultado);
         /*
         //Imprimo a quantidade de nós e a altura da árvore resultante
         System.out.println("Quantidade de Nós: " + arv.quantidadeNos()+ " Altura: " + arv.altura());
