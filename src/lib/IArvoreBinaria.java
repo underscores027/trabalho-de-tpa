@@ -44,38 +44,13 @@ public interface IArvoreBinaria<T> {
      * @return caso tenha sido encontrado um elemento com o valor buscado, o elemento será removido da árvore e seu valor (do tipo T) será retornado. Caso contrário retorna null.
      */
 
-public void remover(T valor) {
+    public void remover(T valor);
+    
     /**
      * Método que retorna a altura da árvore
      * @return Retorna a altura da árvore. Árvores só com raiz tem altura zero(0). Se raiz for nula retorne -1.
      */
-    this.noRaiz = removerRecursivo(this.noRaiz, valor);
-}
 
-private No<T> removerRecursivo(No<T> no, T valor) {
-    if (no == null) {
-        return no;
-    }
-    //primeira caso: nao tem nenhum nó na arvore
-
-    if (comparator.compare(valor, no.getValue()) < 0) {
-        no.setLeftNode(removerRecursivo(node.getLeftNode(), valor));
-    } else if (comparator.compare(valor, node.getValue()) > 0) {
-        node.setRightNode(removerRecursivo(node.getRightNode(), valor));
-    } else {
-        // Caso 2: Nó sem filhos ou com apenas um filho
-        if (node.hasLeft() == null) {
-            return node.getRightNode();
-        } else if (node.hasRight() == null) {
-            return node.getLeftNode();
-        }
-
-        // Caso 3: Nó com dois filhos - Pegando o mínimo do lado direito
-        node.setValue(encontrarMinimo(node.getRightNode()).getValue());
-        node.setRightNode(removerRecursivo(node.getRightNode(), node.getValue()));
-    }
-    return node;
-}
     public int altura();
 
     /**
