@@ -67,11 +67,20 @@ public class ArvoreBinariaExemplo<T> implements IArvoreBinaria<T> {
     public int altura() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-       
-    
+
+
     @Override
     public int quantidadeNos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return quantidadeNos(raiz);
+    }
+
+    @Override
+    public int quantidadeNos(No<T> noAtual) {
+        if (noAtual == null){
+            return 0;
+        } else {
+            return 1 + quantidadeNos(noAtual.getFilhoDireita()) + quantidadeNos(noAtual.getFilhoEsquerda());
+        }
     }
 
     @Override

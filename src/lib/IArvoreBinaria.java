@@ -85,6 +85,8 @@ private No<T> removerRecursivo(No<T> no, T valor) {
     public int quantidadeNos();
 
 
+    int quantidadeNos(No<T> noAtual);
+
     /**
      * Metódo que retona o resultado do caminhamento em nível na árvore.
      * @return String contendo os toString dos valores armazenados nos nós, separados por " \n ". Os nós devem ser percorridos em nível. A String deve iniciar com "[" e finalizar com "]"
