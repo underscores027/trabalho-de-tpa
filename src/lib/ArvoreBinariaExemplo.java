@@ -5,10 +5,7 @@
  */
 package lib;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 
 /**
@@ -22,7 +19,7 @@ public class ArvoreBinariaExemplo<T> implements IArvoreBinaria<T> {
     protected Comparator<T> comparador; 
     
     protected No<T> atual = null;
-    private ArrayList<No<T>> pilhaNavegacao = null;
+    private Stack<No<T>> pilha = new Stack<>();
 
     public ArvoreBinariaExemplo(Comparator<T> comp) {
         comparador = comp;
@@ -152,16 +149,34 @@ public class ArvoreBinariaExemplo<T> implements IArvoreBinaria<T> {
 
         caminharEmOrdemRecursivo(no.getFilhoDireita(), resultado);
     }
-    
-    
+
+
     @Override
     public T obterProximo(){
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(atual == null){
+            atual = raiz;
+        }
+        while (atual != null || !pilha.isEmpty()) {
+            while (atual != null) {
+                pilha.push(atual); //Adicionando o valor atual na pilha
+                atual = atual.getFilhoEsquerda(); //Pegando todos os filhos a esquerda
+            }
+
+            atual = pilha.pop(); //desempilhando o último valor da esquerda e igualando ao atual
+            T valor = atual.getValor(); //iguala o valor ao ultimo pego
+            atual = atual.getFilhoDireita(); //pega o nó a direita da subarvore atual
+
+            return valor; //retorna o valor
+        }
+
+        return null;
     }
-    
+
+
     @Override
     public void reiniciarNavegacao(){
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        pilha.clear(); //esvazia a pilha
+        atual = null; //retorna o valor do no atual para nulo
     }
     
 }
