@@ -5,10 +5,7 @@
  */
 package lib;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 
 /**
@@ -22,7 +19,7 @@ public class ArvoreBinariaExemplo<T> implements IArvoreBinaria<T> {
     protected Comparator<T> comparador; 
     
     protected No<T> atual = null;
-    private ArrayList<No<T>> pilhaNavegacao = null;
+    private Stack<No<T>> pilha = new Stack<>();
 
     public ArvoreBinariaExemplo(Comparator<T> comp) {
         comparador = comp;
@@ -55,23 +52,104 @@ public class ArvoreBinariaExemplo<T> implements IArvoreBinaria<T> {
     }
     @Override
     public T pesquisar(T valor) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (valor == null) {
+            return null;
+        } else {
+            return pesquisarRecursivo(valor, raiz);
+        }
+    }
+
+    private T pesquisarRecursivo(T valor, No<T> no) {
+        if (no == null) {
+            return null;
+        }
+
+        int comparacao = comparador.compare(valor, no.getValor());
+
+        if (comparacao == 0) {
+            return no.getValor();
+        } else if (comparacao < 0) {
+            return pesquisarRecursivo(valor, no.getFilhoEsquerda());
+        } else {
+            return pesquisarRecursivo(valor, no.getFilhoDireita());
+        }
     }
 
     @Override
-    public T remover(T valor) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void remover(T valor) {
+        /**
+         * Método que retorna a altura da árvore
+         * @return Retorna a altura da árvore. Árvores só com raiz tem altura zero(0). Se raiz for nula retorne -1.
+         */
+        this.raiz = removerRecursivo(this.raiz, valor);
+    }
+
+    private No<T> removerRecursivo(No<T> no, T valor) {
+        if (no == null) {
+            return no;
+        }
+        //primeira caso: nao tem nenhum nó na arvore
+
+        if (comparador.compare(valor, no.getValor()) < 0) {
+            no.setFilhoEsquerda(removerRecursivo(no.getFilhoEsquerda(), valor));
+        } else if (comparador.compare(valor, no.getValor()) > 0) {
+            no.setFilhoDireita(removerRecursivo(no.getFilhoDireita(), valor));
+        } else {
+            // Caso 2: Nó sem filhos ou com apenas um filho
+            if (no.getFilhoEsquerda() == null) { //Acho que é no.getFilhoEsquerda
+                return no.getFilhoDireita();
+            } else if (no.getFilhoDireita() == null) { //Acho que é no.getFilhoDireita
+                return no.getFilhoEsquerda();
+            }
+
+            // Caso 3: Nó com dois filhos - Pegando o mínimo do lado direito
+            no.setValor(encontrarMinimo(no.getFilhoDireita()).getValor());
+            no.setFilhoDireita(removerRecursivo(no.getFilhoDireita(), no.getValor()));
+        }
+        return no;
+    }
+
+    private No<T> encontrarMinimo(No<T> no) {
+        No<T> atual = no;
+        while (atual.getFilhoEsquerda() != null) {
+            atual = atual.getFilhoEsquerda();
+        }
+        return atual;
     }
 
     @Override
     public int altura() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return calcAltura(raiz);
     }
-       
-    
+
+    private int calcAltura(No<T> no){
+        if (no == null) {
+            return -1;
+        }
+
+        if (no.getFilhoEsquerda() == null && no.getFilhoDireita() == null) {
+            return 0;
+        }
+
+        int esquerda = calcAltura(no.getFilhoEsquerda());
+        int direita = calcAltura(no.getFilhoDireita());
+
+        return Math.max(esquerda, direita) + 1;
+    }
+
+
     @Override
     public int quantidadeNos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return quantidadeNos(raiz);
+    }
+
+    @Override
+    public int quantidadeNos(No<T> noAtual) {
+        if (noAtual == null){
+            return 0;
+        } else {
+            return 1 + quantidadeNos(noAtual.getFilhoDireita()) + quantidadeNos(noAtual.getFilhoEsquerda());
+        }
     }
 
     @Override
@@ -128,16 +206,34 @@ public class ArvoreBinariaExemplo<T> implements IArvoreBinaria<T> {
 
         caminharEmOrdemRecursivo(no.getFilhoDireita(), resultado);
     }
-    
-    
+
+
     @Override
     public T obterProximo(){
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(atual == null){
+            atual = raiz;
+        }
+        while (atual != null || !pilha.isEmpty()) {
+            while (atual != null) {
+                pilha.push(atual); //Adicionando o valor atual na pilha
+                atual = atual.getFilhoEsquerda(); //Pegando todos os filhos a esquerda
+            }
+
+            atual = pilha.pop(); //desempilhando o último valor da esquerda e igualando ao atual
+            T valor = atual.getValor(); //iguala o valor ao ultimo pego
+            atual = atual.getFilhoDireita(); //pega o nó a direita da subarvore atual
+
+            return valor; //retorna o valor
+        }
+
+        return null;
     }
-    
+
+
     @Override
     public void reiniciarNavegacao(){
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        pilha.clear(); //esvazia a pilha
+        atual = null; //retorna o valor do no atual para nulo
     }
     
 }
