@@ -1,7 +1,5 @@
 # trabArvoreBinariaExemplo
 
-Repositório dos cria:
-
 Na pasta [lib](src/lib) se encontram os seguintes arquivos:
 - [IArvoreBinaria.java](src/lib/IArvoreBinaria.java): Interface a ser implementada pela sua classe ArvoreBinaria.
 - [ArvoreBinariaExemplo.java](src/lib/ArvoreBinariaExemplo.java): Esta classe deve ser substituída pela sua classe de "ArvoreBinaria". Você pode utilizar esta classe como base para implementar a sua, implementando os métodos sobrescritos.
@@ -16,5 +14,4 @@ Na pasta [lib](src/lib) se encontram os seguintes arquivos:
 - [AppRelatorioArvoreBinaria.java](src/app/AppRelatorioArvoreBinaria.java): App a ser executado para fazer o relatório da primeira etapa do trabalho.
 - [AppRelatorioAvl.java](src/app/AppRelatorioAvl.java): App a ser executado para fazer o relatório da terceira etapa do trabalho.
 
-Métodos da Etapa 1:
-Adicionar(): ok
+Etapa 1 e 2 concluída

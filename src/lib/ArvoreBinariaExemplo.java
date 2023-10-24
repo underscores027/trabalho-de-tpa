@@ -10,7 +10,7 @@ import java.util.*;
 
 /**
  *
- * @author victoriocarvalho
+ * @author Victor, Marcela, Isabella, Hanna
  */
 public class ArvoreBinariaExemplo<T> implements IArvoreBinaria<T> {
     //public class ArvoreBinariaExemplo<T extends Comparable<T>> implements IArvoreBinaria<T> {
@@ -77,10 +77,6 @@ public class ArvoreBinariaExemplo<T> implements IArvoreBinaria<T> {
 
     @Override
     public void remover(T valor) {
-        /**
-         * Método que retorna a altura da árvore
-         * @return Retorna a altura da árvore. Árvores só com raiz tem altura zero(0). Se raiz for nula retorne -1.
-         */
         this.raiz = removerRecursivo(this.raiz, valor);
     }
 
@@ -96,9 +92,9 @@ public class ArvoreBinariaExemplo<T> implements IArvoreBinaria<T> {
             no.setFilhoDireita(removerRecursivo(no.getFilhoDireita(), valor));
         } else {
             // Caso 2: Nó sem filhos ou com apenas um filho
-            if (no.getFilhoEsquerda() == null) { //Acho que é no.getFilhoEsquerda
+            if (no.getFilhoEsquerda() == null) {
                 return no.getFilhoDireita();
-            } else if (no.getFilhoDireita() == null) { //Acho que é no.getFilhoDireita
+            } else if (no.getFilhoDireita() == null) {
                 return no.getFilhoEsquerda();
             }
 
@@ -109,7 +105,7 @@ public class ArvoreBinariaExemplo<T> implements IArvoreBinaria<T> {
         return no;
     }
 
-    private No<T> encontrarMinimo(No<T> no) {
+    public No<T> encontrarMinimo(No<T> no) {
         No<T> atual = no;
         while (atual.getFilhoEsquerda() != null) {
             atual = atual.getFilhoEsquerda();
@@ -190,8 +186,8 @@ public class ArvoreBinariaExemplo<T> implements IArvoreBinaria<T> {
 
         StringBuilder resultado = new StringBuilder("[");
         caminharEmOrdemRecursivo(raiz, resultado);
-        resultado.setLength(resultado.length() - 2); // finalzinho da fila
-        resultado.append("]"); //isso não é uma lista, stringbuilder usa .append
+        resultado.setLength(resultado.length() - 2);
+        resultado.append("]");
 
         return resultado.toString();
     }
@@ -220,10 +216,10 @@ public class ArvoreBinariaExemplo<T> implements IArvoreBinaria<T> {
             }
 
             atual = pilha.pop(); //desempilhando o último valor da esquerda e igualando ao atual
-            T valor = atual.getValor(); //iguala o valor ao ultimo pego
-            atual = atual.getFilhoDireita(); //pega o nó a direita da subarvore atual
+            T valor = atual.getValor(); 
+            atual = atual.getFilhoDireita();
 
-            return valor; //retorna o valor
+            return valor;
         }
 
         return null;
