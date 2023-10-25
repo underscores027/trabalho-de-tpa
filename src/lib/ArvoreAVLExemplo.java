@@ -105,4 +105,15 @@ public class ArvoreAVLExemplo <T> extends ArvoreBinariaExemplo<T>{
         return y;
     }
 
+    private No<T> rotacaoEsquerdaDireita(No<T> x){
+        x.setFilhoEsquerda(rotacaoEsquerda(x.getFilhoEsquerda()));
+        return rotacaoDireita(x);
+    }
+
+    private No<T> rotacaoDireitaEsquerda(No<T> x){
+        x.setFilhoDireita(rotacaoDireita(x.getFilhoDireita()));
+        return rotacaoEsquerda(x);
+    }
+
+
 }
