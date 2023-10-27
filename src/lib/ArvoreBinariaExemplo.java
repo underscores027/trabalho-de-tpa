@@ -86,9 +86,9 @@ public class ArvoreBinariaExemplo<T> implements IArvoreBinaria<T> {
         }
         //primeira caso: nao tem nenhum nó na arvore
 
-        if (comparador.compare(valor, no.getValor()) < 0) {
+        if (this.comparador.compare(valor, no.getValor()) < 0) {
             no.setFilhoEsquerda(removerRecursivo(no.getFilhoEsquerda(), valor));
-        } else if (comparador.compare(valor, no.getValor()) > 0) {
+        } else if (this.comparador.compare(valor, no.getValor()) > 0) {
             no.setFilhoDireita(removerRecursivo(no.getFilhoDireita(), valor));
         } else {
             // Caso 2: Nó sem filhos ou com apenas um filho
