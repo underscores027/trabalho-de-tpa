@@ -36,6 +36,38 @@ public class ArvoreAVLExemplo <T> extends ArvoreBinariaExemplo<T>{
         return balancear(noAtual);
     }
 
+    @Override
+    public void remover(T valor) {
+        raiz = removerRecursivo(raiz, valor);
+    }
+
+    private No<T> removerRecursivo(No<T> no, T valor) {
+        if (no == null) {
+            return no;
+        }
+
+        int comparacao = comparador.compare(valor, no.getValor());
+
+        if (comparacao < 0) {
+            no.setFilhoEsquerda(removerRecursivo(no.getFilhoEsquerda(), valor));
+        } else if (comparacao > 0) {
+            no.setFilhoDireita(removerRecursivo(no.getFilhoDireita(), valor));
+        } else {
+            if (no.getFilhoEsquerda() == null) {
+                return no.getFilhoDireita();
+            } else if (no.getFilhoDireita() == null) {
+                return no.getFilhoEsquerda();
+            }
+
+            no.setValor(encontrarMinimo(no.getFilhoDireita()).getValor());
+            no.setFilhoDireita(removerRecursivo(no.getFilhoDireita(), no.getValor()));
+        }
+
+        atualizarAlturaEVerificarBalanceamento(no);
+
+        return balancear(no);
+    }
+
     private int altura(No<T> no) {
         if (no == null) {
             return -1;
